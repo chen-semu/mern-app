@@ -32,7 +32,10 @@ const addNewUser= async (req,res)=>{
 
 const getUserById= async (req,res)=>{
   await usersDB.findById(req.params.id)
-  .then((result)=>res.status(300).json({success:true,massage:`success in finding user: ${result}`}))
+  .then((user)=>{
+  if(!user){return res.json({success:false,massage:"user not found"})}
+  return res.status(200).json({success:true,massage:`success in finding user: ${user}`})
+})
   .catch(error=>res.status(400).json({success:false,error}))
 }
 
